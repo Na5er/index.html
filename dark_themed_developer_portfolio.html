@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nasser Mohamed Elsaid | Computer Engineer & Full Stack Developer</title>
+  
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Tajawal', 'sans-serif'],
+          },
+          colors: {
+            bgDark: '#08090d',
+            cardDark: 'rgba(17, 20, 29, 0.75)',
+            accentBlue: '#2563eb',
+            glowCyan: '#38bdf8',
+            glowPurple: '#818cf8',
+            neonBorder: 'rgba(56, 189, 248, 0.25)',
+          },
+          animation: {
+            'glow-pulse': 'glowPulse 6s ease-in-out infinite',
+            'float-slow': 'float 7s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s infinite',
+          },
+          keyframes: {
+            glowPulse: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.08)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            shimmer: {
+              '100%': { transform: 'translateX(100%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
+
+    body {
+      overflow-y: visible;
+    }
+
+    *,
+    *::before,
+    *::after {
+      cursor: none !important;
+      user-select: none;
+    }
+
+    #cursorTrail {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2000;
+    }
+
+    #cursorDot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: #38bdf8;
+      box-shadow: 0 0 12px #38bdf8, 0 0 24px rgba(56, 189, 248, 0.7);
+      pointer-events: none;
+      z-index: 2001;
+      opacity: 0;
+      transform: translate3d(-100px, -100px, 0);
+      transition: width 140ms ease, height 140ms ease, box-shadow 140ms ease;
+      will-change: transform, width, height;
+    }
+
+    #cursorDot.is-hovering {
+      width: 12px;
+      height: 12px;
+      box-shadow: 0 0 16px #38bdf8, 0 0 32px rgba(56, 189, 248, 0.95);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #08090d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Ambient Background Grids */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+
+    /* Glass Effect */
+    .glass-panel {
+      background: rgba(14, 18, 27, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card {
+      background: rgba(18, 22, 34, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.2);
+    }
+
+    .page-section {
+      min-height: 100vh;
+      height: 100vh;
+      width: 100%;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 24px !important;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      overflow: hidden;
+      scroll-margin-top: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    #siteHeader {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+      max-width: calc(100vw - 32px);
+    }
+
+    #aboutModal {
+      align-items: flex-start;
+      justify-content: center;
+      padding: 96px 24px 32px;
+      background: #08090d;
+      backdrop-filter: none;
+    }
+
+    #aboutModal > div {
+      width: min(100%, 1100px);
+      max-width: 1100px;
+      max-height: none;
+      min-height: calc(100vh - 128px);
+      overflow: visible;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    #aboutModal > div > div:first-child {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0;
+      border: 0;
+    }
+
+    #aboutModal > div > div:first-child > div {
+      display: none;
+    }
+
+    #aboutModal > div > div:last-child {
+      padding: 24px 0 48px;
+    }
+
+    .page-section > * {
+      opacity: 0;
+      transform: translateY(20px) scale(0.985);
+      transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .page-section.is-visible > * {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #projects {
+      height: auto !important;
+      min-height: 100vh;
+      justify-content: flex-start;
+      padding-top: 104px !important;
+      padding-bottom: 40px !important;
+      overflow: visible;
+    }
+
+    #projectsContainer {
+      width: 100%;
+      height: 560px;
+      flex: 0 0 auto;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    #projectsContainer > .project-slide {
+      display: none !important;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      position: absolute;
+      inset: 0;
+      margin: 0;
+    }
+
+    #projectsContainer > .project-slide.is-active {
+      display: grid !important;
+      grid-template-rows: minmax(0, 1fr);
+      align-items: stretch;
+      animation: projectSlideIn 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    #projectsContainer > .project-slide > div:first-child {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    #projectsContainer > .project-slide > div:first-child > .rounded-2xl {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #projectsContainer > .project-slide > div:first-child > .rounded-2xl > div:nth-child(2) {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #projectsContainer > .project-slide > div:first-child > .rounded-2xl > div:nth-child(2) img,
+    #projectsContainer > .project-slide > div:first-child > .rounded-2xl > img {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      flex: 1 1 auto;
+      object-fit: cover;
+    }
+
+    #projectsContainer > .project-slide > div:nth-child(2) {
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+
+    #projectsContainer > .project-slide > div:nth-child(2) > :not([hidden]) ~ :not([hidden]) {
+      margin-top: 0;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      #projectsContainer {
+        height: 620px;
+      }
+
+      #projectsContainer > .project-slide {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+      }
+
+      #projectsContainer > .project-slide > div:first-child {
+        grid-column: span 7 / span 7;
+      }
+
+      #projectsContainer > .project-slide > div:nth-child(2) {
+        grid-column: span 5 / span 5;
+        gap: 1.25rem;
+      }
+
+      #projectsContainer > .project-slide > div:nth-child(2) h3 {
+        font-size: 1.25rem;
+        line-height: 1.25;
+      }
+
+      #projectsContainer > .project-slide > div:nth-child(2) > p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+      }
+
+      #projectsContainer > .project-slide > div:nth-child(2) .tech-pill {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.625rem;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #projectsContainer {
+        height: 900px;
+      }
+
+      #projectsContainer > .project-slide.is-active {
+        grid-template-rows: auto minmax(0, 1fr);
+      }
+
+      #projectsContainer > .project-slide > div:first-child > .rounded-2xl {
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    .project-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .project-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background: rgba(148, 163, 184, 0.45);
+      transition: all 220ms ease;
+    }
+
+    .project-dot.is-active {
+      width: 24px;
+      background: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+    }
+
+    @keyframes projectSlideIn {
+      from { opacity: 0; transform: translateX(18px) scale(0.985); }
+      to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
+    .tech-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: all 0.2s ease;
+    }
+    .tech-pill:hover {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+
+    /* Radial Spotlight Glows */
+    .spotlight-blue {
+      background: radial-gradient(circle 380px at 50% 50%, rgba(37, 99, 235, 0.2), transparent 75%);
+    }
+    .spotlight-cyan {
+      background: radial-gradient(circle 420px at 50% 50%, rgba(56, 189, 248, 0.16), transparent 75%);
+    }
+    .spotlight-purple {
+      background: radial-gradient(circle 450px at 50% 50%, rgba(139, 92, 246, 0.12), transparent 80%);
+    }
+
+  </style>
+</head>
+<body class="bg-[#08090d] text-slate-200 antialiased font-sans selection:bg-blue-600/30 selection:text-cyan-300 relative min-h-screen overflow-x-hidden">
+
+  <!-- Ambient Gradients (Exact like screenshot) -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-40 -left-20 w-[600px] h-[600px] spotlight-blue rounded-full filter blur-3xl opacity-70 animate-glow-pulse"></div>
+    <div class="absolute top-[35%] -right-40 w-[650px] h-[650px] spotlight-cyan rounded-full filter blur-3xl opacity-60"></div>
+    <div class="absolute bottom-10 left-[20%] w-[700px] h-[700px] spotlight-purple rounded-full filter blur-3xl opacity-40"></div>
+    <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
+  </div>
+
+  <canvas id="cursorTrail" aria-hidden="true"></canvas>
+  <div id="cursorDot" aria-hidden="true"></div>
+
+  <!-- Floating Glass Navigation Pill (Identical to Screenshots) -->
+  <header id="siteHeader" class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+    <nav class="glass-panel px-3 py-1.5 rounded-full flex items-center gap-1 shadow-2xl border border-white/10 text-xs sm:text-sm font-medium tracking-wide">
+      <button onclick="switchTab('home')" id="nav-home" class="nav-link px-4 py-2 rounded-full transition-all duration-300 text-slate-300 hover:text-white">
+        Home
+      </button>
+      <button onclick="switchTab('about')" id="nav-about" class="nav-link px-4 py-2 rounded-full transition-all duration-300 text-slate-300 hover:text-white">
+        About
+      </button>
+      <button onclick="switchTab('skills')" id="nav-skills" class="nav-link px-4 py-2 rounded-full transition-all duration-300 text-slate-300 hover:text-white">
+        Skills
+      </button>
+      <button onclick="switchTab('projects')" id="nav-projects" class="nav-link px-4 py-2 rounded-full transition-all duration-300 text-slate-300 hover:text-white">
+        Projects
+      </button>
+      <button onclick="switchTab('contact')" id="nav-contact" class="nav-link px-4 py-2 rounded-full transition-all duration-300 text-slate-300 hover:text-white">
+        Contact
+      </button>
+      
+      <!-- Quick Edit Portfolio Button -->
+      <button onclick="toggleEditDrawer()" title=" تعديل بيانات البورتفوليو" class="ml-2 w-8 h-8 rounded-full bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 flex items-center justify-center transition border border-white/5">
+        <i data-lucide="settings" class="w-4 h-4"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main class="relative z-10 w-full min-h-screen">
+
+    <!-- ============================================== -->
+    <!-- 1. HERO / ABOUT SECTION (Screenshots 1 & 4) -->
+    <!-- ============================================== -->
+    <section id="home" class="page-section transition-all duration-500">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full max-w-7xl">
+        
+        <!-- Left: Hero Text & Pitch -->
+        <div class="lg:col-span-7 space-y-7 text-left">
+          <!-- Availability Badge -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wide">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Available for new projects & freelance
+          </div>
+
+          <!-- Main Role Heading with Gradient Glow -->
+          <div class="space-y-1">
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-none">
+              <span id="display-title-1" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300">
+                Computer Engineer &
+              </span>
+              <br/>
+              <span id="display-title-2" class="text-slate-100">Full Stack Developer</span>
+            </h1>
+          </div>
+
+          <!-- Description -->
+          <p class="text-slate-400 text-base sm:text-lg max-w-xl leading-relaxed">
+            Explore integrated software systems, responsive interfaces, and creative visual production shaped by engineering and practical problem solving.
+          </p>
+
+          <!-- Tech stack pills (From Screenshot 1) -->
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">Full Stack</span>
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">Odoo (16, 18)</span>
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">React Components</span>
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">Linux Administration</span>
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">Backend & Databases</span>
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">Server Deployment</span>
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">Video Editor</span>
+            <span class="tech-pill px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-300">Photographer</span>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-4">
+            <button onclick="switchTab('projects')" class="px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(37,99,235,0.4)] transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+              <span>View Projects</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+            <button onclick="toggleCard()" id="cardToggleBtn" class="px-5 py-3 rounded-full glass-panel hover:bg-white/10 text-slate-300 hover:text-white font-medium text-sm transition-all border border-white/10">
+              Hide Card
+            </button>
+            <button onclick="switchTab('about')" class="px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200 font-medium text-sm transition-all">
+              About Me
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Modern Profile Card (Zakaria Gnaoui style from Screenshot 1) -->
+        <div id="profileCardWrapper" class="lg:col-span-5 flex justify-center transition-all duration-500">
+          <div class="relative w-full max-w-[340px] sm:max-w-[370px] rounded-3xl p-6 glass-panel border border-cyan-500/20 shadow-[0_0_50px_rgba(37,99,235,0.18)] hover:shadow-[0_0_60px_rgba(56,189,248,0.25)] transition-all duration-300 group">
+            
+            <!-- Glow highlight aura -->
+            <div class="absolute -top-10 -right-10 w-44 h-44 bg-blue-500/20 rounded-full filter blur-2xl pointer-events-none"></div>
+
+            <!-- Window Header / Close Button -->
+            <div class="flex justify-between items-center mb-5">
+              <span class="text-[11px] uppercase tracking-wider text-slate-400 font-mono font-medium flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Verified Profile
+              </span>
+              <button onclick="toggleCard()" class="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 hover:text-white transition">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+
+            <!-- Avatar & Background Illustration -->
+            <div class="relative flex justify-center mb-6">
+              <div class="relative w-40 h-40 sm:w-44 sm:h-44 rounded-2xl overflow-hidden p-1 bg-gradient-to-b from-blue-500/40 via-sky-500/20 to-transparent shadow-xl">
+                <!-- 3D Mascot / Bird Accent in background like screenshot -->
+                <div class="absolute -left-3 top-2 text-cyan-400/30 transform -rotate-12 pointer-events-none">
+                  <i data-lucide="sparkles" class="w-12 h-12"></i>
+                </div>
+                
+                <img 
+                  id="display-avatar"
+                  src="My Portfolio/profile-source.jpg" 
+                  alt="Developer Profile"
+                  onerror="this.src='https://placehold.co/400x400/111827/38bdf8?text=Dev+Photo'"
+                  class="w-full h-full object-cover rounded-xl filter contrast-105"
+                />
+              </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="text-center space-y-1 mb-6">
+              <h3 id="display-name" class="text-2xl font-bold text-white tracking-tight">
+                Nasser Mohamed Elsaid
+              </h3>
+              <p id="display-subtitle" class="text-sm font-medium text-cyan-400/90">
+                Computer Engineer & Full Stack Developer
+              </p>
+              <p id="display-location" class="text-xs text-slate-400 flex items-center justify-center gap-1">
+                <i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i> Ankara, Turkey
+              </p>
+            </div>
+
+            <!-- Social Action Icons (Screenshot 1) -->
+            <div class="flex items-center justify-center gap-2.5 mb-6">
+              <a href="https://github.com/Na5er" target="_blank" rel="noreferrer" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 hover:text-cyan-400 text-slate-300 flex items-center justify-center transition border border-white/5">
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.18-3.37-1.18-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 7.99c.85 0 1.71.12 2.52.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.63c0 .26.18.57.69.47A10 10 0 0 0 12 2Z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/nasser-elsaid/" target="_blank" rel="noreferrer" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 hover:text-cyan-400 text-slate-300 flex items-center justify-center transition border border-white/5">
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M5.2 3.5a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4ZM3.4 9.3H7v11.2H3.4V9.3Zm5.8 0h3.4v1.53h.05c.47-.88 1.62-1.81 3.34-1.81 3.57 0 4.23 2.35 4.23 5.4v6.08h-3.6v-5.39c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85v5.49H9.2V9.3Z"/></svg>
+              </a>
+              <a href="mailto:nassermohd707@gmail.com" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 hover:text-cyan-400 text-slate-300 flex items-center justify-center transition border border-white/5" title="Email Nasser" aria-label="Email Nasser">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </a>
+              <a href="https://wa.me/905312682993" target="_blank" rel="noreferrer" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 hover:text-emerald-400 text-slate-300 flex items-center justify-center transition border border-white/5" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+              </a>
+            </div>
+
+            <!-- Save Contact Button (Identical to screenshot) -->
+            <button onclick="saveContactVCard()" class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600/80 to-sky-600/80 hover:from-blue-600 hover:to-sky-500 text-white font-medium text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition-all border border-sky-400/30">
+              <i data-lucide="user-plus" class="w-4 h-4"></i>
+              <span>Save Contact</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="page-section transition-all duration-500">
+      <div class="w-full max-w-6xl space-y-6 text-left">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-3">Profile Interface</p>
+            <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">About Me</h2>
+          </div>
+          <button onclick="downloadResume()" class="px-4 py-2 rounded-full bg-cyan-400 text-slate-950 hover:bg-cyan-300 font-semibold text-xs flex items-center gap-2 transition">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Download Resume
+          </button>
+        </div>
+
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-5xl">
+          Computer Engineer and Software Developer with professional experience in the Odoo (16/18) framework. While deeply focused on crafting intuitive Frontend interfaces using React, I am dedicated to delivering high-quality, integrated software that balances user experience with backend database logic. Experienced in administering Linux environments, developing enterprise modules, and visual media production.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="glass-card rounded-2xl p-5">
+            <h3 class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-3">Education & Languages</h3>
+            <p class="text-sm font-semibold text-white">B.S. in Computer Engineering</p>
+            <p class="text-xs text-slate-400 mt-1">OSTIM Technical University, Ankara, Turkey</p>
+            <p class="text-xs text-slate-300 mt-3">English, Arabic, Turkish</p>
+          </div>
+          <div class="glass-card rounded-2xl p-5">
+            <h3 class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-3">Contact</h3>
+            <div class="flex flex-wrap gap-3 text-xs text-slate-300">
+              <a href="mailto:nassermohd707@gmail.com" class="hover:text-cyan-300 transition">nassermohd707@gmail.com</a>
+              <a href="https://wa.me/905312682993" target="_blank" rel="noreferrer" class="hover:text-emerald-300 transition">+905312682993</a>
+              <a href="https://github.com/Na5er" target="_blank" rel="noreferrer" class="hover:text-cyan-300 transition">GitHub</a>
+              <a href="https://www.linkedin.com/in/nasser-elsaid/" target="_blank" rel="noreferrer" class="hover:text-cyan-300 transition">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-3">Professional Experience</h3>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <article class="glass-card rounded-2xl p-5">
+              <div class="flex flex-wrap justify-between gap-2">
+                <h4 class="text-sm font-bold text-white">Software Developer / IT Specialist</h4>
+                <span class="text-[10px] font-mono text-cyan-300">Feb 2025 - Apr 2026</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">University IT Department, OSTIM Teknik University, Ankara, Turkey</p>
+              <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 leading-relaxed mt-3">
+                <li>Custom Odoo 16/18 addons and web snippets.</li>
+                <li>React frontend integration for responsive workflows.</li>
+                <li>Linux deployment, shell administration, and troubleshooting.</li>
+                <li>Backend integrations and database operations.</li>
+              </ul>
+            </article>
+            <article class="glass-card rounded-2xl p-5">
+              <div class="flex flex-wrap justify-between gap-2">
+                <h4 class="text-sm font-bold text-white">Photographer & Video Editor</h4>
+                <span class="text-[10px] font-mono text-cyan-300">Jan 2020 - Jan 2024</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">ALBAIDA TV, Dhofar, Salalah, Oman</p>
+              <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 leading-relaxed mt-3">
+                <li>Visual content creation, photography, and cinematography.</li>
+                <li>Post-production, audio balancing, and cinematic grading.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. SKILLS SECTION (Screenshot 4) -->
+    <!-- ============================================== -->
+    <section id="skills" class="page-section transition-all duration-500">
+      <div class="text-center max-w-2xl mx-auto mb-14 space-y-4">
+        <!-- Floating 3D Cube Icon Graphic (From Screenshot 4) -->
+        <div class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-cyan-500/10 to-transparent border border-emerald-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+          <i data-lucide="box" class="w-8 h-8 text-emerald-400 animate-float-slow"></i>
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Skills</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          The tools, languages, and technologies I use to design, build, and ship complete digital solutions.
+        </p>
+      </div>
+
+      <!-- Skills Grid (Grid representation matching Screenshot 4 with glowing active states) -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 max-w-5xl mx-auto" id="skillsGrid">
+        
+        <!-- Skill 1 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-cyan-500/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="atom" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Full Stack</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Development</span>
+        </div>
+
+        <!-- Skill 2 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-slate-400/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition">
+            <span class="font-bold text-sm tracking-tighter">N</span>
+          </div>
+          <span class="text-xs font-semibold text-white">Odoo (16, 18)</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Framework</span>
+        </div>
+
+        <!-- Skill 3 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-blue-500/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 mb-2 group-hover:scale-110 transition">
+            <span class="font-bold text-xs">TS</span>
+          </div>
+          <span class="text-xs font-semibold text-white">React Components</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Frontend</span>
+        </div>
+
+        <!-- Skill 4 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-emerald-500/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="server" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Linux Administration</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Systems</span>
+        </div>
+
+        <!-- Skill 5 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-slate-400/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-300 mb-2 group-hover:scale-110 transition">
+            <span class="font-semibold text-xs font-mono">ex</span>
+          </div>
+          <span class="text-xs font-semibold text-white">Backend & Databases</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Data Systems</span>
+        </div>
+
+        <!-- Skill 6 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-sky-400/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="wind" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Server Deployment</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Operations</span>
+        </div>
+
+        <!-- Skill 7 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-indigo-400/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Video Editor</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Post-production</span>
+        </div>
+
+        <!-- Skill 8 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-emerald-500/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="leaf" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Photographer</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Visual Content</span>
+        </div>
+
+        <!-- Skill 9 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-blue-400/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="container" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Odoo Web Snippets</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Customization</span>
+        </div>
+
+        <!-- Skill 10 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-orange-500/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="git-branch" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">IT Support</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Troubleshooting</span>
+        </div>
+
+        <!-- Skill 11 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-purple-400/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Database Operations</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Enterprise Systems</span>
+        </div>
+
+        <!-- Skill 12 -->
+        <div class="glass-card group p-4 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-pink-500/40 hover:scale-105">
+          <div class="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400 mb-2 group-hover:scale-110 transition">
+            <i data-lucide="network" class="w-6 h-6"></i>
+          </div>
+          <span class="text-xs font-semibold text-white">Visual Storytelling</span>
+          <span class="text-[10px] text-slate-400 font-mono mt-0.5">Creative Media</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. PROJECTS SECTION (Screenshot 2: BatisFoot style) -->
+    <!-- ============================================== -->
+    <section id="projects" class="page-section transition-all duration-500">
+      <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+        <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Featured Projects</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          A selection of projects that showcase my experience in building modern, responsive, and user-focused web applications.
+        </p>
+      </div>
+
+      <!-- Projects Stack List -->
+      <div class="space-y-16 max-w-6xl mx-auto" id="projectsContainer">
+        
+        <!-- PROJECT 1: AI Clinic Concierge System -->
+        <div class="project-slide is-active grid grid-cols-1 lg:grid-cols-12 gap-8 items-center glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+          <!-- macOS Window Mockup (Left Side) -->
+          <div class="lg:col-span-7">
+            <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-950 shadow-2xl group">
+              <!-- Window top bar with red, yellow, green buttons and URL -->
+              <div class="bg-slate-900/90 px-4 py-3 flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                </div>
+                <div class="px-4 py-1 rounded-md bg-black/40 text-[11px] font-mono text-slate-400 flex items-center gap-1.5 border border-white/5">
+                  <i data-lucide="lock" class="w-3 h-3 text-slate-400"></i> clinic.local/dashboard
+                </div>
+                <div class="w-8"></div>
+              </div>
+
+              <!-- Clinic concierge project image -->
+              <div class="p-3 sm:p-4 bg-slate-950">
+                <img src="My%20Portfolio/AI%20Clinic%20Concierge%20System.jpeg" alt="AI Clinic Concierge System with n8n workflow and clinic operations dashboard" class="w-full aspect-video object-cover object-center rounded-xl border border-emerald-400/20" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Details (Right Side) -->
+          <div class="lg:col-span-5 space-y-5 text-left">
+            <div class="space-y-1">
+              <span class="text-xs uppercase font-mono tracking-wider text-cyan-400 font-semibold">FULL-STACK &amp; AI AUTOMATION</span>
+              <h3 class="text-3xl font-extrabold text-white">AI Clinic Concierge System</h3>
+            </div>
+
+            <p class="text-slate-400 text-sm leading-relaxed">An automated healthcare concierge platform connecting messaging channels (Telegram/WhatsApp) to a tri-lingual operations dashboard, featuring multi-turn AI booking and workflow orchestration.</p>
+
+            <!-- Tech Pills (As seen in Screenshot 2) -->
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">React</span>
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">FastAPI</span>
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">n8n</span>
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">PostgreSQL</span>
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Docker</span>
+            </div>
+
+            <!-- Action Buttons (Live Demo & GitHub) -->
+            <div class="flex items-center gap-3 pt-2">
+              <a href="#" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-2 transition shadow-lg shadow-blue-600/20">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Live Demo
+              </a>
+              <a href="https://github.com/Na5er/clinic-concierge-system" target="_blank" rel="noreferrer" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-medium text-xs flex items-center gap-2 border border-white/10 transition">
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.18-3.37-1.18-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 7.99c.85 0 1.71.12 2.52.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.63c0 .26.18.57.69.47A10 10 0 0 0 12 2Z"/></svg> GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 2: Coffee Web Experience -->
+        <div class="project-slide grid grid-cols-1 lg:grid-cols-12 gap-8 items-center glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+          <!-- macOS Mockup -->
+          <div class="lg:col-span-7">
+            <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-950 shadow-2xl">
+              <div class="bg-slate-900/90 px-4 py-3 flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                </div>
+                <div class="px-4 py-1 rounded-md bg-black/40 text-[11px] font-mono text-slate-400 border border-white/5">https://coffee-web-two-rho.vercel.app/</div>
+                <div class="w-8"></div>
+              </div>
+
+              <div class="p-5 bg-gradient-to-br from-slate-950 via-[#101322] to-slate-900 min-h-[250px] sm:min-h-[290px] flex flex-col justify-between">
+                <img src="My Portfolio/project-preview-coffee.png" alt="Coffee Web Experience preview" onerror="this.src='https://placehold.co/900x500/101322/818cf8?text=Coffee+Web'" class="w-full h-[250px] sm:h-[290px] object-cover object-top rounded-xl border border-indigo-400/20" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Details -->
+          <div class="lg:col-span-5 space-y-5 text-left">
+            <div class="space-y-1">
+              <span class="text-xs uppercase font-mono tracking-wider text-indigo-400 font-semibold">Web Application</span>
+              <h3 class="text-3xl font-extrabold text-white">Coffee Web Experience</h3>
+            </div>
+
+            <p class="text-slate-400 text-sm leading-relaxed">A polished coffee shop website focused on visual storytelling, menu discovery, responsive layouts, and a smooth customer ordering experience.</p>
+
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Responsive UI</span>
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">JavaScript</span>
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Modern CSS</span>
+              <span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Vercel</span>
+            </div>
+
+            <div class="flex items-center gap-3 pt-2">
+              <a href="https://coffee-web-two-rho.vercel.app/" target="_blank" rel="noreferrer" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-2 transition shadow-lg shadow-blue-600/20">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Live Demo
+              </a>
+              <a href="https://github.com/Na5er" target="_blank" rel="noreferrer" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-medium text-xs flex items-center gap-2 border border-white/10 transition">
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.18-3.37-1.18-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 7.99c.85 0 1.71.12 2.52.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.63c0 .26.18.57.69.47A10 10 0 0 0 12 2Z"/></svg> GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 3: FlowBill Automated SaaS Billing Engine -->
+        <div class="project-slide grid grid-cols-1 lg:grid-cols-12 gap-8 items-center glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+          <div class="lg:col-span-7">
+            <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-950 shadow-2xl">
+              <div class="bg-slate-900/90 px-4 py-3 flex items-center justify-between border-b border-white/10"><div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500/80"></span><span class="w-3 h-3 rounded-full bg-yellow-500/80"></span><span class="w-3 h-3 rounded-full bg-emerald-500/80"></span></div><div class="px-4 py-1 rounded-md bg-black/40 text-[11px] font-mono text-slate-400 border border-white/5">flowbill.local / customers</div><div class="w-8"></div></div>
+              <img src="My Portfolio/Screenshot From 2026-09-24 22-56-54.png" alt="FlowBill customer billing dashboard" class="w-full h-[250px] sm:h-[290px] object-cover object-top rounded-xl" />
+            </div>
+          </div>
+          <div class="lg:col-span-5 space-y-5 text-left"><div class="space-y-1"><span class="text-xs uppercase font-mono tracking-wider text-cyan-400 font-semibold">WEB APPLICATION / AUTOMATION</span><h3 class="text-3xl font-extrabold text-white">FlowBill — Automated SaaS Billing Engine</h3></div><p class="text-slate-400 text-sm leading-relaxed">An end-to-end SaaS subscription and billing automation engine built with a sleek administrative dashboard. Features automated customer onboarding, tiered subscription lifecycle management, programmatic PDF invoice generation, and real-time MRR analytics.</p><div class="flex flex-wrap gap-2"><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">FastAPI</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Python</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">SQLAlchemy</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">ReportLab</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">JWT Auth</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">SQLite</span></div><div class="flex items-center gap-3 pt-2"><a href="https://github.com/Na5er/flowbill-engine" target="_blank" rel="noreferrer" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-medium text-xs flex items-center gap-2 border border-white/10 transition">GitHub</a></div></div>
+        </div>
+
+        <!-- PROJECT 4: TaskFlow Collaborative Task & Project Management System -->
+        <div class="project-slide grid grid-cols-1 lg:grid-cols-12 gap-8 items-center glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+          <div class="lg:col-span-7">
+            <div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-950 shadow-2xl">
+              <div class="bg-slate-900/90 px-4 py-3 flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500/80"></span><span class="w-3 h-3 rounded-full bg-yellow-500/80"></span><span class="w-3 h-3 rounded-full bg-emerald-500/80"></span></div>
+                <div class="px-4 py-1 rounded-md bg-black/40 text-[11px] font-mono text-slate-400 border border-white/5">taskflow.local / dashboard</div><div class="w-8"></div>
+              </div>
+              <div class="p-5 bg-gradient-to-br from-slate-950 via-[#0b1820] to-slate-900 min-h-[250px] sm:min-h-[290px]">
+                <img src="My Portfolio/taskflow.png" alt="TaskFlow collaborative task management dashboard" class="w-full h-[250px] sm:h-[290px] object-cover object-top rounded-xl border border-cyan-400/20" />
+                <div class="flex items-center justify-between border-b border-white/10 pb-3"><span class="text-xs font-semibold text-cyan-400">TaskFlow workspace</span><span class="text-[10px] text-slate-400">This week</span></div>
+                <div class="grid grid-cols-3 gap-3 mt-4"><div class="bg-cyan-950/30 border border-cyan-500/20 rounded-xl p-3"><div class="text-[10px] text-slate-400">Completed</div><div class="text-xl font-bold text-white mt-1">24</div></div><div class="bg-amber-950/30 border border-amber-500/20 rounded-xl p-3"><div class="text-[10px] text-slate-400">In progress</div><div class="text-xl font-bold text-amber-300 mt-1">08</div></div><div class="bg-emerald-950/30 border border-emerald-500/20 rounded-xl p-3"><div class="text-[10px] text-slate-400">On track</div><div class="text-xl font-bold text-emerald-300 mt-1">92%</div></div></div>
+                <div class="mt-4 space-y-2"><div class="flex items-center justify-between text-[10px] text-slate-300"><span>Product launch</span><span class="text-cyan-400">78%</span></div><div class="h-1.5 rounded-full bg-white/10"><div class="h-full w-[78%] rounded-full bg-cyan-400"></div></div><div class="flex items-center justify-between text-[10px] text-slate-300"><span>Team sprint</span><span class="text-emerald-400">64%</span></div><div class="h-1.5 rounded-full bg-white/10"><div class="h-full w-[64%] rounded-full bg-emerald-400"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-5 space-y-5 text-left"><div class="space-y-1"><span class="text-xs uppercase font-mono tracking-wider text-cyan-400 font-semibold">WEB APPLICATION / PRODUCTIVITY &amp; COLLABORATION</span><h3 class="text-3xl font-extrabold text-white">TaskFlow — Collaborative Task &amp; Project Management System</h3></div><p class="text-slate-400 text-sm leading-relaxed">A full-stack collaborative task management platform engineered for students and teams to streamline workflows and boost productivity. Features an intuitive administrative dashboard with real-time status tracking, interactive progress indicators, priority-based organization, group task assignment, deadline alerts, and smart filtering capabilities.</p><div class="flex flex-wrap gap-2"><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Python</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Flask</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">JavaScript</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Tailwind CSS / CSS3</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">REST API</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">SQLite</span></div><div class="flex items-center gap-3 pt-2"><button onclick="previewProjectModal('TaskFlow — Collaborative Task &amp; Project Management System')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-2 transition shadow-lg shadow-blue-600/20"><i data-lucide="external-link" class="w-3.5 h-3.5"></i> Live Demo</button><a href="https://github.com/Na5er" target="_blank" rel="noreferrer" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-medium text-xs border border-white/10 transition">GitHub</a></div></div>
+        </div>
+
+        <style>#projectsContainer .project-slide:nth-of-type(4) .bg-gradient-to-br > div { display: none; } #projectsContainer .project-slide:nth-of-type(5) .bg-gradient-to-br { background-image: url('My Portfolio/dashboard-youtub.png'); background-size: cover; background-position: top; } #projectsContainer .project-slide:nth-of-type(5) .bg-gradient-to-br > div { display: none; }</style>
+        <!-- PROJECT 5: YouTube Network Dashboard -->
+        <div class="project-slide grid grid-cols-1 lg:grid-cols-12 gap-8 items-center glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+          <div class="lg:col-span-7"><div class="rounded-2xl overflow-hidden border border-white/15 bg-slate-950 shadow-2xl"><div class="bg-slate-900/90 px-4 py-3 flex items-center justify-between border-b border-white/10"><div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500/80"></span><span class="w-3 h-3 rounded-full bg-yellow-500/80"></span><span class="w-3 h-3 rounded-full bg-emerald-500/80"></span></div><div class="px-4 py-1 rounded-md bg-black/40 text-[11px] font-mono text-slate-400 border border-white/5">network.local / analytics</div><div class="w-8"></div></div><div class="p-5 bg-gradient-to-br from-slate-950 via-[#17111c] to-slate-900 min-h-[250px] sm:min-h-[290px]"><div class="flex items-center justify-between border-b border-white/10 pb-3"><span class="text-xs font-semibold text-pink-400">Creative Network</span><span class="text-[10px] text-slate-400">Monthly overview</span></div><div class="grid grid-cols-3 gap-3 mt-4"><div class="bg-pink-950/30 border border-pink-500/20 rounded-xl p-3"><div class="text-[10px] text-slate-400">Creators</div><div class="text-xl font-bold text-white mt-1">24</div></div><div class="bg-emerald-950/30 border border-emerald-500/20 rounded-xl p-3"><div class="text-[10px] text-slate-400">Revenue</div><div class="text-xl font-bold text-emerald-300 mt-1">$48K</div></div><div class="bg-blue-950/30 border border-blue-500/20 rounded-xl p-3"><div class="text-[10px] text-slate-400">Videos</div><div class="text-xl font-bold text-blue-300 mt-1">186</div></div></div><div class="mt-5 flex items-end gap-2 h-20 border-b border-white/10"><span class="w-1/6 h-1/3 bg-pink-500/60 rounded-t"></span><span class="w-1/6 h-1/2 bg-pink-500/70 rounded-t"></span><span class="w-1/6 h-2/5 bg-pink-500/60 rounded-t"></span><span class="w-1/6 h-3/4 bg-pink-400/80 rounded-t"></span><span class="w-1/6 h-3/5 bg-pink-400/80 rounded-t"></span><span class="w-1/6 h-full bg-pink-300 rounded-t"></span></div></div></div></div>
+          <div class="lg:col-span-5 space-y-5 text-left"><div class="space-y-1"><span class="text-xs uppercase font-mono tracking-wider text-pink-400 font-semibold">FULL-STACK / DESKTOP &amp; WEB APP</span><h3 class="text-3xl font-extrabold text-white">YouTube Network Dashboard — Creator Management Platform</h3></div><p class="text-slate-400 text-sm leading-relaxed">A modern analytics and creator management platform built for YouTube Multi-Channel Networks (MCNs). Features automated performance tracking, revenue monitoring, video &amp; livestream statistics aggregation, and dedicated creator profile management, packaged as a cross-platform desktop and web application.</p><div class="flex flex-wrap gap-2"><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Next.js</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">TypeScript</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Electron</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Prisma</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">SQLite</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Tailwind CSS</span><span class="tech-pill px-3 py-1 rounded-full text-xs font-medium text-slate-300">Node.js</span></div><div class="flex items-center gap-3 pt-2"><button onclick="previewProjectModal('YouTube Network Dashboard — Creator Management Platform')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-2 transition shadow-lg shadow-blue-600/20"><i data-lucide="external-link" class="w-3.5 h-3.5"></i> Live Demo</button><a href="https://github.com/Na5er" target="_blank" rel="noreferrer" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-medium text-xs border border-white/10 transition">GitHub</a></div></div>
+        </div>
+
+      </div>
+
+      <div class="project-controls" aria-label="Experience navigation">
+        <button onclick="changeProjectSlide(-1)" class="w-9 h-9 rounded-full glass-panel border border-white/10 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-300 flex items-center justify-center transition" aria-label="Previous experience">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        </button>
+        <div class="flex items-center gap-2" id="projectDots">
+          <button onclick="showProjectSlide(0)" class="project-dot is-active" aria-label="Show Software Developer experience"></button>
+          <button onclick="showProjectSlide(1)" class="project-dot" aria-label="Show Photographer experience"></button>
+          <button onclick="showProjectSlide(2)" class="project-dot" aria-label="Show FlowBill project"></button>
+          <button onclick="showProjectSlide(3)" class="project-dot" aria-label="Show TaskFlow project"></button>
+          <button onclick="showProjectSlide(4)" class="project-dot" aria-label="Show YouTube Network Dashboard project"></button>
+        </div>
+        <button onclick="changeProjectSlide(1)" class="w-9 h-9 rounded-full glass-panel border border-white/10 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-300 flex items-center justify-center transition" aria-label="Next experience">
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 4. CONTACT SECTION (Screenshot 3: Let's Connect) -->
+    <!-- ============================================== -->
+    <section id="contact" class="page-section transition-all duration-500">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start max-w-6xl mx-auto">
+        
+        <!-- Left: Heading & Direct Info Cards -->
+        <div class="lg:col-span-6 space-y-7 text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Available for work
+          </div>
+
+          <h2 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            Let's connect and <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-sky-300">
+              build something great together
+            </span>
+          </h2>
+
+          <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+            Whether you have a question, a project idea, or just want to say hi, feel free to drop a message!
+          </p>
+
+          <!-- Contact Cards with Copy feature -->
+          <div class="space-y-3.5 pt-2">
+            <!-- Email Card -->
+            <a href="mailto:nassermohd707@gmail.com" class="glass-card p-4 rounded-2xl flex items-center justify-between cursor-pointer border border-white/10 hover:border-cyan-400/40 group">
+              <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition">
+                  <i data-lucide="mail" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-[11px] text-slate-400 font-medium">Email</div>
+                  <div class="text-sm font-semibold text-slate-200 group-hover:text-cyan-300 transition">nassermohd707@gmail.com</div>
+                </div>
+              </div>
+              <span class="text-xs text-slate-400 group-hover:text-white transition flex items-center gap-1 font-mono">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+              </span>
+            </a>
+
+            <!-- WhatsApp Card -->
+            <a href="https://wa.me/905312682993" target="_blank" rel="noreferrer" class="glass-card p-4 rounded-2xl flex items-center justify-between cursor-pointer border border-white/10 hover:border-emerald-400/40 group">
+              <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition">
+                  <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-[11px] text-slate-400 font-medium">WhatsApp / Phone</div>
+                  <div class="text-sm font-semibold text-slate-200 group-hover:text-emerald-300 transition">+90 531 268 2993</div>
+                </div>
+              </div>
+              <span class="text-xs text-slate-400 group-hover:text-white transition flex items-center gap-1 font-mono">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: macOS Styled Message Form (Screenshot 3) -->
+        <div class="lg:col-span-6">
+          <div class="rounded-3xl overflow-hidden glass-panel border border-white/15 shadow-2xl relative">
+            
+            <!-- Window header -->
+            <div class="bg-slate-900/80 px-5 py-3.5 flex items-center justify-between border-b border-white/10">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+              </div>
+              <span class="text-xs font-mono text-slate-400 font-medium">New message</span>
+              <div class="w-8"></div>
+            </div>
+
+            <!-- Form Content -->
+            <form onsubmit="handleContactSubmit(event)" class="p-6 sm:p-8 space-y-4 text-left">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Name -->
+                <div class="space-y-1.5">
+                  <label class="text-xs text-slate-400 font-medium flex items-center gap-1.5">
+                    <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i> Full name
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="John Doe" 
+                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-white/10 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 transition"
+                  />
+                </div>
+                <!-- Email -->
+                <div class="space-y-1.5">
+                  <label class="text-xs text-slate-400 font-medium flex items-center gap-1.5">
+                    <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i> Email address
+                  </label>
+                  <input 
+                    type="email" 
+                    required 
+                    placeholder="john@example.com" 
+                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-white/10 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 transition"
+                  />
+                </div>
+              </div>
+
+              <!-- Subject -->
+              <div class="space-y-1.5">
+                <label class="text-xs text-slate-400 font-medium flex items-center gap-1.5">
+                  <i data-lucide="bookmark" class="w-3.5 h-3.5 text-slate-400"></i> Subject
+                </label>
+                <input 
+                  type="text" 
+                  required 
+                  placeholder="Project inquiry / Opportunity" 
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-white/10 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 transition"
+                />
+              </div>
+
+              <!-- Message -->
+              <div class="space-y-1.5">
+                <label class="text-xs text-slate-400 font-medium flex items-center gap-1.5">
+                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-slate-400"></i> Message
+                </label>
+                <textarea 
+                  rows="4" 
+                  required 
+                  placeholder="Tell me about your project or idea..." 
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-white/10 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 transition resize-none"
+                ></textarea>
+              </div>
+
+              <!-- Submit Button (Screenshot 3 style) -->
+              <button 
+                type="submit" 
+                id="submitBtn"
+                class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 transition-all cursor-pointer"
+              >
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Send message</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Edit Drawer (Enables the user to customize portfolio details immediately) -->
+  <div id="editDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-slate-950/95 border-l border-white/10 backdrop-blur-2xl p-6 shadow-2xl transform translate-x-full transition-transform duration-300 overflow-y-auto">
+    <div class="flex items-center justify-between pb-4 border-b border-white/10">
+      <div class="flex items-center gap-2">
+        <i data-lucide="sliders" class="w-5 h-5 text-cyan-400"></i>
+        <h3 class="text-base font-bold text-white">تخصيص بيانات البورتفوليو</h3>
+      </div>
+      <button onclick="toggleEditDrawer()" class="text-slate-400 hover:text-white p-1">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="mt-6 space-y-4 text-right" dir="rtl">
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">اسم المطور الكامل:</label>
+        <input id="input-name" type="text" value="Nasser Mohamed Elsaid" class="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-sm text-white" />
+      </div>
+
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">المسمى الوظيفي (Title):</label>
+        <input id="input-role" type="text" value="Computer Engineer & Full Stack Developer" class="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-sm text-white" />
+      </div>
+
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">الموقع أو الدولة:</label>
+        <input id="input-location" type="text" value="Ankara, Turkey" class="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-sm text-white" />
+      </div>
+
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">رابط الصورة الشخصية (Image URL):</label>
+        <input id="input-avatar" type="text" value="My Portfolio/profile-source.jpg" class="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-sm text-white" />
+      </div>
+
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">النبذة التعريفية (Bio):</label>
+        <textarea id="input-bio" rows="4" class="w-full px-3 py-2 bg-slate-900 border border-white/10 rounded-lg text-sm text-white">Computer Engineer and Software Developer with professional experience in the Odoo (16/18) framework. While deeply focused on crafting intuitive Frontend interfaces, Dedicated to delivering high-quality, integrated software that balances user experience with backend logic.</textarea>
+      </div>
+
+      <button onclick="applyCustomization()" class="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm rounded-xl mt-4 transition shadow-lg shadow-cyan-500/20">
+        تحديث الصفحة الآن ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Message Element (Safe alternative to alert) -->
+  <div id="toastMessage" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-5 py-3 rounded-full bg-slate-900/90 border border-cyan-400/40 text-cyan-300 text-xs sm:text-sm font-medium shadow-2xl backdrop-blur-xl flex items-center gap-2 pointer-events-none opacity-0 transition-opacity duration-300">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toastText">تم النسخ بنجاح!</span>
+  </div>
+
+  <!-- About Me Window -->
+  <div id="aboutModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/80 backdrop-blur-md p-4" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle" onclick="handleAboutBackdrop(event)">
+    <div class="glass-panel border border-cyan-400/20 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-[0_0_70px_rgba(14,165,233,0.2)]" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10">
+        <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+          <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+          <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+          <span class="ml-2">nasser.profile</span>
+        </div>
+        <button onclick="closeAboutModal()" aria-label="Close About Me" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 hover:text-white transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-7 text-left">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-3">Profile Interface</p>
+          <h2 id="aboutModalTitle" class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            About Me
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <div class="glass-card rounded-2xl p-4">
+            <p class="text-xs text-slate-400 mb-1">Name</p>
+            <p class="font-semibold text-white">Nasser Mohamed Elsaid</p>
+          </div>
+          <div class="glass-card rounded-2xl p-4">
+            <p class="text-xs text-slate-400 mb-1">Location</p>
+            <p class="font-semibold text-white">Ankara, Turkey</p>
+          </div>
+          <div class="glass-card rounded-2xl p-4 sm:col-span-2">
+            <p class="text-xs text-slate-400 mb-1">Education</p>
+            <p class="font-semibold text-white">B.S. in Computer Engineering, OSTIM Technical University, Ankara, Turkey</p>
+          </div>
+        </div>
+
+        <p id="aboutModalBio" class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Computer Engineer and Software Developer with professional experience in the Odoo (16/18) framework. While deeply focused on crafting intuitive Frontend interfaces using React, I am dedicated to delivering high-quality, integrated software that balances user experience with backend database logic. Experienced in administering Linux environments, developing enterprise modules, and visual media production.
+        </p>
+
+        <div>
+          <h3 class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-3">Technical Skills</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">Full Stack</span>
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">Odoo (16, 18)</span>
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">React.js</span>
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">Linux Administration</span>
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">Server Deployment</span>
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">Backend & Databases</span>
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">Video Editor</span>
+            <span class="tech-pill px-3 py-1.5 rounded-full text-xs text-slate-200">Photographer</span>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-2">Education & Languages</h3>
+            <p class="text-sm text-slate-300">B.S. in Computer Engineering, OSTIM Technical University, Ankara, Turkey.</p>
+            <p class="text-xs text-slate-400 mt-1">Languages: English, Arabic, Turkish.</p>
+          </div>
+
+          <div>
+            <h3 class="text-xs uppercase tracking-[0.2em] text-cyan-400 font-mono mb-3">Professional Experience</h3>
+            <div class="space-y-3">
+              <article class="glass-card rounded-2xl p-4">
+                <div class="flex flex-wrap items-start justify-between gap-2">
+                  <h4 class="text-sm font-bold text-white">Software Developer / IT Specialist</h4>
+                  <span class="text-[10px] font-mono text-cyan-300">Feb 2025 - Apr 2026</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-1">University IT Department, OSTIM Teknik University, Ankara, Turkey</p>
+                <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 leading-relaxed mt-3">
+                  <li>Developed custom Odoo 16/18 addons and web snippets.</li>
+                  <li>Integrated React frontend components for responsive university workflows.</li>
+                  <li>Managed Linux server deployment, shell administration, and troubleshooting.</li>
+                  <li>Supported database operations and backend enterprise integrations.</li>
+                </ul>
+              </article>
+              <article class="glass-card rounded-2xl p-4">
+                <div class="flex flex-wrap items-start justify-between gap-2">
+                  <h4 class="text-sm font-bold text-white">Photographer & Video Editor</h4>
+                  <span class="text-[10px] font-mono text-cyan-300">Jan 2020 - Jan 2024</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-1">ALBAIDA TV, Dhofar, Salalah, Oman</p>
+                <ul class="list-disc list-inside space-y-1 text-xs text-slate-300 leading-relaxed mt-3">
+                  <li>Created professional visual content through photography and cinematography.</li>
+                  <li>Handled post-production, audio balancing, and cinematic color grading.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/10">
+          <div class="flex flex-wrap gap-3 text-xs text-slate-300">
+            <a href="mailto:nassermohd707@gmail.com" class="hover:text-cyan-300 transition">nassermohd707@gmail.com</a>
+            <a href="tel:+905312682993" class="hover:text-emerald-300 transition">+905312682993</a>
+            <a href="https://github.com/Na5er" target="_blank" rel="noreferrer" class="hover:text-cyan-300 transition">GitHub</a>
+            <a href="https://www.linkedin.com/in/nasser-elsaid/" target="_blank" rel="noreferrer" class="hover:text-cyan-300 transition">LinkedIn</a>
+          </div>
+          <button onclick="downloadResume()" class="px-4 py-2 rounded-full bg-cyan-400 text-slate-950 hover:bg-cyan-300 font-semibold text-xs flex items-center gap-2 transition">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            Download Resume
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Interactive Modal -->
+  <div id="projectModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel border border-white/20 rounded-3xl max-w-lg w-full p-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 id="modalProjectTitle" class="text-xl font-bold text-white">Project Details</h3>
+        <button onclick="closeProjectModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <p id="modalProjectBody" class="text-sm text-slate-300 leading-relaxed">
+        Live preview environment configured for demonstration.
+      </p>
+      <div class="pt-4 flex justify-end gap-3">
+        <button onclick="closeProjectModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-medium">
+          Close
+        </button>
+        <button onclick="showToast('Connecting to live demo server...')" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold">
+          Launch Sandbox
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const scrollSections = [
+      { id: 'home', navId: 'nav-home' },
+      { id: 'about', navId: 'nav-about' },
+      { id: 'skills', navId: 'nav-skills' },
+      { id: 'projects', navId: 'nav-projects' },
+      { id: 'contact', navId: 'nav-contact' }
+    ];
+
+    function setActiveNav(navId) {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.className = 'nav-link px-4 py-2 rounded-full transition-all duration-300 text-slate-300 hover:text-white';
+      });
+
+      const activeLink = document.getElementById(navId);
+      if (activeLink) {
+        activeLink.className = 'nav-link px-4 py-2 rounded-full transition-all duration-300 bg-blue-600/25 border border-blue-500/40 text-blue-300 shadow-[0_0_15px_rgba(37,99,235,0.4)]';
+      }
+    }
+
+    // Scroll to a page section while keeping every section available to ScrollSpy.
+    function switchTab(tabId) {
+      const sectionId = tabId;
+      const section = document.getElementById(sectionId);
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveNav(tabId === 'home' ? 'nav-home' : `nav-${tabId}`);
+    }
+
+    document.querySelectorAll('#projectsContainer .project-slide').forEach((slide) => {
+      const details = slide.querySelector(':scope > div:nth-child(2)');
+      if (!details || details.children.length < 4) return;
+
+      const intro = document.createElement('div');
+      intro.className = 'space-y-2';
+      const header = details.children[0];
+      const description = details.children[1];
+      details.insertBefore(intro, header);
+      intro.append(header, description);
+      details.classList.remove('space-y-5');
+      details.classList.add('flex', 'h-full', 'flex-col', 'justify-center', 'gap-5');
+    });
+
+    let activeProjectSlide = 0;
+
+    function showProjectSlide(slideIndex) {
+      const slides = document.querySelectorAll('#projectsContainer .project-slide');
+      const dots = document.querySelectorAll('#projectDots .project-dot');
+      if (!slides.length) return;
+
+      activeProjectSlide = (slideIndex + slides.length) % slides.length;
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('is-active', index === activeProjectSlide);
+      });
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('is-active', index === activeProjectSlide);
+      });
+    }
+
+    function changeProjectSlide(direction) {
+      showProjectSlide(activeProjectSlide + direction);
+    }
+
+    function openAboutModal() {
+      const modal = document.getElementById('aboutModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+      modal.querySelector('button').focus();
+    }
+
+    function closeAboutModal() {
+      const modal = document.getElementById('aboutModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function handleAboutBackdrop(event) {
+      if (event.target.id === 'aboutModal') closeAboutModal();
+    }
+
+    function downloadResume() {
+      const resume = [
+        'Nasser Mohamed Elsaid',
+        'Computer Engineer & Full Stack Developer',
+        'Ankara, Turkey',
+        '',
+        'CONTACT',
+        'Email: nassermohd707@gmail.com',
+        'Phone / WhatsApp: +905312682993',
+        'GitHub: https://github.com/Na5er',
+        'LinkedIn: https://www.linkedin.com/in/nasser-elsaid/',
+        '',
+        'EDUCATION',
+        'B.S. in Computer Engineering, OSTIM Technical University, Ankara, Turkey',
+        '',
+        'SUMMARY',
+        'Computer Engineer and Software Developer with professional experience in the Odoo (16/18) framework. Focused on intuitive React frontend interfaces, integrated software, backend database logic, Linux administration, enterprise modules, and visual media production.',
+        '',
+        'SKILLS',
+        'Full Stack | Odoo (16, 18) | React.js | Linux Administration | Server Deployment | Backend & Databases | Video Editor | Photographer',
+        '',
+        'EXPERIENCE',
+        'Software Developer / IT Specialist - University IT Department, OSTIM Teknik University, Ankara, Turkey (Feb 2025 - Apr 2026)',
+        'Photographer and Video Editor - ALBAIDA TV, Dhofar, Salalah, Oman (Jan 2020 - Jan 2024)'
+      ].join('\n');
+      const blob = new Blob([resume], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Nasser-Mohamed-Elsaid-Resume.txt';
+      link.click();
+      URL.revokeObjectURL(link.href);
+      showToast('Resume downloaded successfully!');
+    }
+
+    // Toggle Floating Profile Card on/off
+    let isCardVisible = true;
+    function toggleCard() {
+      const card = document.getElementById('profileCardWrapper');
+      const btn = document.getElementById('cardToggleBtn');
+      if (isCardVisible) {
+        card.classList.add('hidden');
+        btn.textContent = 'Show Card';
+        isCardVisible = false;
+      } else {
+        card.classList.remove('hidden');
+        btn.textContent = 'Hide Card';
+        isCardVisible = true;
+      }
+    }
+
+    // Safe Clipboard Copying without alert()
+    function copyToClipboard(text, successMsg = 'Copied to clipboard!') {
+      try {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showToast(successMsg);
+      } catch (err) {
+        showToast('Unable to copy directly');
+      }
+    }
+
+    // Toast feedback popup
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toastMessage');
+      const toastText = document.getElementById('toastText');
+      toastText.textContent = message;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 3000);
+    }
+
+    // Virtual Contact / vCard simulation
+    function saveContactVCard() {
+      showToast('Contact card prepared! (vCard downloaded)');
+    }
+
+    // Contact Form submission handler
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Sending...</span>`;
+      lucide.createIcons();
+
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        lucide.createIcons();
+        event.target.reset();
+        showToast('Your message has been sent successfully! 🚀');
+      }, 1200);
+    }
+
+    // Project modal preview
+    function previewProjectModal(projectName) {
+      const modal = document.getElementById('projectModal');
+      const title = document.getElementById('modalProjectTitle');
+      const body = document.getElementById('modalProjectBody');
+      title.textContent = projectName;
+      body.textContent = `You are viewing the interactive showcase details for "${projectName}". Production deployment and staging builds are currently operational.`;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('projectModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Edit Drawer Toggling
+    function toggleEditDrawer() {
+      const drawer = document.getElementById('editDrawer');
+      drawer.classList.toggle('translate-x-full');
+    }
+
+    // Apply Live Customizations from Drawer
+    function applyCustomization() {
+      const name = document.getElementById('input-name').value;
+      const role = document.getElementById('input-role').value;
+      const loc = document.getElementById('input-location').value;
+      const bio = document.getElementById('input-bio').value;
+      const avatar = document.getElementById('input-avatar').value;
+
+      if (name) document.getElementById('display-name').textContent = name;
+      if (role) {
+        document.getElementById('display-subtitle').textContent = role;
+        document.getElementById('display-title-2').textContent = role.split(' ').slice(1).join(' ') || 'Developer';
+      }
+      if (loc) document.getElementById('display-location').innerHTML = `<i data-lucide="map-pin" class="w-3 h-3 text-slate-400"></i> ` + loc;
+      if (bio) document.getElementById('aboutModalBio').textContent = bio;
+      if (avatar) document.getElementById('display-avatar').src = avatar;
+
+      lucide.createIcons();
+      toggleEditDrawer();
+      showToast('تم تحديث البيانات بنجاح!');
+    }
+
+    function initCursorTrail() {
+      const canvas = document.getElementById('cursorTrail');
+      const cursorDot = document.getElementById('cursorDot');
+      const context = canvas.getContext('2d');
+      const particles = [];
+      let devicePixelRatio = window.devicePixelRatio || 1;
+      let lastFrameTime = performance.now();
+      let lastParticleTime = 0;
+
+      function resizeCanvas() {
+        devicePixelRatio = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * devicePixelRatio;
+        canvas.height = window.innerHeight * devicePixelRatio;
+        context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      }
+
+      function addParticle(x, y, now) {
+        if (now - lastParticleTime < 10) return;
+        lastParticleTime = now;
+        particles.push({
+          x,
+          y,
+          size: 1.5 + Math.random() * 2.5,
+          age: 0,
+          lifetime: 360 + Math.random() * 100
+        });
+        if (particles.length > 100) particles.shift();
+      }
+
+      function drawTrail(now) {
+        const elapsed = Math.min(now - lastFrameTime, 50);
+        lastFrameTime = now;
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+        for (let index = particles.length - 1; index >= 0; index -= 1) {
+          const particle = particles[index];
+          particle.age += elapsed;
+          const progress = particle.age / particle.lifetime;
+          if (progress >= 1) {
+            particles.splice(index, 1);
+            continue;
+          }
+
+          const opacity = 1 - progress;
+          const size = particle.size * (1 - progress * 0.65);
+          const glow = context.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, size * 5);
+          glow.addColorStop(0, `rgba(56, 189, 248, ${opacity})`);
+          glow.addColorStop(0.35, `rgba(56, 189, 248, ${opacity * 0.5})`);
+          glow.addColorStop(1, 'rgba(56, 189, 248, 0)');
+          context.fillStyle = glow;
+          context.beginPath();
+          context.arc(particle.x, particle.y, size * 5, 0, Math.PI * 2);
+          context.fill();
+        }
+
+        requestAnimationFrame(drawTrail);
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('pointermove', event => {
+        const now = performance.now();
+        cursorDot.style.opacity = '1';
+        cursorDot.style.transform = `translate3d(${event.clientX - 4}px, ${event.clientY - 4}px, 0)`;
+        addParticle(event.clientX, event.clientY, now);
+
+        const interactiveTarget = event.target instanceof Element
+          ? event.target.closest('a, button, input, textarea, select, [role="button"]')
+          : null;
+        cursorDot.classList.toggle('is-hovering', Boolean(interactiveTarget));
+      });
+
+      window.addEventListener('pointerleave', () => {
+        cursorDot.style.opacity = '0';
+        cursorDot.classList.remove('is-hovering');
+      });
+
+      resizeCanvas();
+      requestAnimationFrame(drawTrail);
+    }
+
+    // Initialize Lucide Icons on DOM ready
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initCursorTrail();
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+
+        const visibleSections = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio);
+        if (visibleSections[0]) {
+          const activeSection = scrollSections.find(item => item.id === visibleSections[0].target.id);
+          if (activeSection) setActiveNav(activeSection.navId);
+        }
+      }, { threshold: [0.6, 0.8, 1] });
+
+      scrollSections.forEach(item => {
+        const section = document.getElementById(item.id);
+        if (section) observer.observe(section);
+      });
+
+      document.getElementById('home').classList.add('is-visible');
+      setActiveNav('nav-home');
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeAboutModal();
+    });
+  </script>
+</body>
+</html>
