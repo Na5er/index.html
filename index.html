@@ -14,10 +14,60 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Lucide Icons -->
-                  <div class="text-[11px] text-slate-400 font-medium">Email</div>
-                  <div class="text-sm font-semibold text-slate-200 group-hover:text-cyan-300 transition">nassermohd707@gmail.com</div>
-                </div>
-              </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Tajawal', 'sans-serif'],
+          },
+          colors: {
+            bgDark: '#08090d',
+            cardDark: 'rgba(17, 20, 29, 0.75)',
+            accentBlue: '#2563eb',
+            glowCyan: '#38bdf8',
+            glowPurple: '#818cf8',
+            neonBorder: 'rgba(56, 189, 248, 0.25)',
+          },
+          animation: {
+            'glow-pulse': 'glowPulse 6s ease-in-out infinite',
+            'float-slow': 'float 7s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s infinite',
+          },
+          keyframes: {
+            glowPulse: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.08)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            shimmer: {
+              '100%': { transform: 'translateX(100%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
+
+    body {
+      overflow-y: visible;
+    }
+
+    *,
+    *::before,
     *::after {
       cursor: none !important;
       user-select: none;
