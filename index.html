@@ -401,6 +401,174 @@
       background: radial-gradient(circle 450px at 50% 50%, rgba(139, 92, 246, 0.12), transparent 80%);
     }
 
+    @media (max-width: 767px) {
+      html {
+        scroll-snap-type: none;
+        overflow-x: hidden;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      *,
+      *::before,
+      *::after {
+        cursor: auto !important;
+      }
+
+      #cursorTrail,
+      #cursorDot {
+        display: none;
+      }
+
+      #siteHeader {
+        top: 12px;
+        width: calc(100% - 24px);
+        max-width: none;
+      }
+
+      #siteHeader nav {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        scrollbar-width: none;
+      }
+
+      #siteHeader nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      #siteHeader .nav-link {
+        flex: 0 0 auto;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.7rem;
+      }
+
+      .page-section,
+      #projects {
+        height: auto !important;
+        min-height: 0;
+        justify-content: flex-start;
+        padding: 96px 16px 56px !important;
+        scroll-snap-align: none;
+        overflow: visible;
+      }
+
+      #home {
+        min-height: 100vh;
+      }
+
+      #home > div {
+        gap: 2.5rem;
+      }
+
+      #home h1,
+      #about h2,
+      #skills h2,
+      #projects h2,
+      #contact h2 {
+        font-size: clamp(2rem, 10vw, 3rem);
+        line-height: 1.08;
+      }
+
+      #home .flex-wrap.items-center {
+        gap: 0.65rem;
+      }
+
+      #home .flex-wrap.items-center button {
+        flex: 1 1 auto;
+        justify-content: center;
+        min-height: 44px;
+      }
+
+      #profileCardWrapper {
+        width: 100%;
+      }
+
+      #profileCardWrapper > div {
+        max-width: 100%;
+        padding: 1.25rem;
+      }
+
+      #aboutModal {
+        padding: 84px 16px 24px;
+      }
+
+      #aboutModal > div {
+        min-height: 0;
+      }
+
+      #skills > div:first-child,
+      #projects > div:first-child {
+        margin-bottom: 2rem;
+      }
+
+      #skillsGrid {
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #projectsContainer {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+      }
+
+      #projectsContainer > .project-slide {
+        position: relative;
+        inset: auto;
+        height: auto;
+        min-height: 0;
+      }
+
+      #projectsContainer > .project-slide.is-active {
+        grid-template-rows: auto;
+        gap: 1.5rem;
+      }
+
+      #projectsContainer > .project-slide > div:nth-child(2) {
+        height: auto;
+        gap: 1rem;
+      }
+
+      #projectsContainer > .project-slide > div:first-child > .rounded-2xl {
+        aspect-ratio: 16 / 10;
+      }
+
+      #projectsContainer > .project-slide > div:first-child > .rounded-2xl > div:first-child > div:nth-child(2) {
+        max-width: 52%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      #projectsContainer > .project-slide h3 {
+        font-size: 1.5rem;
+        line-height: 1.2;
+      }
+
+      #projectsContainer > .project-slide .flex.items-center.gap-3 {
+        flex-wrap: wrap;
+      }
+
+      #projectsContainer > .project-slide .flex.items-center.gap-3 > a {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+
+      #contact > div {
+        gap: 2rem;
+      }
+
+      input,
+      textarea,
+      select {
+        user-select: text;
+      }
+    }
+
   </style>
 </head>
 <body class="bg-[#08090d] text-slate-200 antialiased font-sans selection:bg-blue-600/30 selection:text-cyan-300 relative min-h-screen overflow-x-hidden">
