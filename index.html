@@ -501,6 +501,22 @@
         scroll-snap-stop: normal;
       }
 
+      #home,
+      #about {
+        display: block !important;
+        position: relative;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+      }
+
+      #home > div,
+      #about > div {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+      }
+
       #home {
         min-height: 0;
       }
