@@ -1867,7 +1867,9 @@
     // Initialize Lucide Icons on DOM ready
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-      initCursorTrail();
+      if (!window.matchMedia('(pointer: coarse)').matches) {
+        initCursorTrail();
+      }
 
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
