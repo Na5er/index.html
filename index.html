@@ -434,13 +434,19 @@
         scroll-snap-stop: normal;
         scroll-behavior: auto !important;
         overflow-x: hidden;
-        overflow-y: auto;
+        overflow-y: auto !important;
+        position: static;
+        height: auto;
+        min-height: 100%;
         touch-action: pan-y;
       }
 
       body {
         overflow-x: hidden;
-        overflow-y: visible;
+        overflow-y: auto !important;
+        position: static;
+        height: auto;
+        min-height: 100%;
         touch-action: pan-y;
         -webkit-overflow-scrolling: touch;
       }
@@ -466,6 +472,7 @@
         top: 12px;
         width: calc(100% - 24px);
         max-width: none;
+        pointer-events: none;
       }
 
       #siteHeader nav {
@@ -474,6 +481,7 @@
         overflow-x: auto;
         justify-content: flex-start;
         scrollbar-width: none;
+        pointer-events: auto;
       }
 
       #siteHeader nav::-webkit-scrollbar {
@@ -1596,7 +1604,8 @@
     function switchTab(tabId) {
       const sectionId = tabId;
       const section = document.getElementById(sectionId);
-      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+      if (section) section.scrollIntoView({ behavior: isTouchDevice ? 'auto' : 'smooth', block: 'start' });
       setActiveNav(tabId === 'home' ? 'nav-home' : `nav-${tabId}`);
     }
 
