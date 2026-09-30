@@ -60,10 +60,14 @@
       scroll-behavior: smooth;
       scroll-snap-type: y mandatory;
       overflow-y: scroll;
+      overscroll-behavior-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     body {
       overflow-y: visible;
+      overscroll-behavior-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     *,
@@ -173,6 +177,14 @@
       z-index: 1000;
       width: max-content;
       max-width: calc(100vw - 32px);
+    }
+
+    #editDrawer {
+      pointer-events: none;
+    }
+
+    #editDrawer:not(.translate-x-full) {
+      pointer-events: auto;
     }
 
     #aboutModal {
@@ -420,10 +432,15 @@
       html {
         scroll-snap-type: none;
         overflow-x: hidden;
+        overflow-y: auto;
+        touch-action: pan-y;
       }
 
       body {
         overflow-x: hidden;
+        overflow-y: visible;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
       }
 
       *,
@@ -471,6 +488,8 @@
         padding: 96px 16px 56px !important;
         scroll-snap-align: none;
         overflow: visible;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
       }
 
       #home {
