@@ -431,6 +431,8 @@
     @media (max-width: 767px) {
       html {
         scroll-snap-type: none;
+        scroll-snap-stop: normal;
+        scroll-behavior: auto !important;
         overflow-x: hidden;
         overflow-y: auto;
         touch-action: pan-y;
@@ -441,6 +443,12 @@
         overflow-y: visible;
         touch-action: pan-y;
         -webkit-overflow-scrolling: touch;
+      }
+
+      main,
+      .page-section,
+      .page-section * {
+        touch-action: pan-y;
       }
 
       *,
@@ -490,6 +498,7 @@
         overflow: visible;
         touch-action: pan-y;
         -webkit-overflow-scrolling: touch;
+        scroll-snap-stop: normal;
       }
 
       #home {
